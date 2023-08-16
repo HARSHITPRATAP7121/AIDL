@@ -12,6 +12,7 @@ def attendence():
     except:
         at=pd.DataFrame({'name':[],'timestamp':[]})
 
+
     try:
         df =pd.read_csv(fname)
     except:
