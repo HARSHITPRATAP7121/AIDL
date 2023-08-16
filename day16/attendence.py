@@ -10,7 +10,7 @@ def attendence():
     try:
         df =pd.read_csv(at_file)
     except:
-        print('Face Database not found,Halt')
+        at=pd.DataFrame({'name':[],'timestamp':[]})
 
     try:
         df =pd.read_csv(fname)
@@ -47,8 +47,15 @@ def attendence():
                         else:
                             count==1
                             old_name=name
-                        if count == 5:
+                        if count>5 and name!='Unknown':
+                            from datetime import datetime as dt
+                            new_dt=pd.DataFrame({'name':[name],'timestamp':[str(dt.now())]})
+                            at=pd.concat(
+                                [at,new_dt],ignore_index=True,axis=0
+                            )
+                            at.to_csv(at_file,index=False)
                             print('Attendance Captured')
+                            break
                         cv2.putText(img,name,(150,150),cv2.FONT_HERSHEY_PLAIN,10,(0,0,255),10)
 
                 cv2.imshow('Preview',img)
