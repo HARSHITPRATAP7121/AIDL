@@ -6,15 +6,22 @@ import face_recognition as fr
 def attendence():
 
     fname='features.csv'
+    at_file='attendance.csv'
+    try:
+        df =pd.read_csv(at_file)
+    except:
+        print('Face Database not found,Halt')
+
     try:
         df =pd.read_csv(fname)
     except:
         print('Face Database not found,Halt')
-        err= True
+        
     else:
         fd = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
         vid =cv2.VideoCapture(0)
-
+        count=0
+        old_name=''
         while True:
             ack,img = vid.read()
             if ack:
@@ -35,6 +42,13 @@ def attendence():
 
                         else:
                             name='Unknown'
+                        if old_name==name:
+                            count+=1
+                        else:
+                            count==1
+                            old_name=name
+                        if count == 5:
+                            print('Attendance Captured')
                         cv2.putText(img,name,(150,150),cv2.FONT_HERSHEY_PLAIN,10,(0,0,255),10)
 
                 cv2.imshow('Preview',img)
