@@ -11,7 +11,7 @@ pwd= ttk.Variable(login_app)
 
 ttk.Label(
     login_app,
-    text='Enter your credentials',
+    text='Enter your credentials', 
     font=font_
 ).place(x=200,y=20)
 ttk.Label(login_app,text='Username').place(x=100,y=80)
